@@ -99,5 +99,11 @@ function togglebtn() {
     }
 }
 
+
+// Function for storing data to the local storage
+function setLocalList() {
+
+}
+
 // Handle Event Listeners
 addBtn.addEventListener('click', AddInput);
