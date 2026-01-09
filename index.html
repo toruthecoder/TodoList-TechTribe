@@ -23,7 +23,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
-<body class='w-screen flex items-center justify-center'>
+<body class='w-screen flex items-center justify-center h-full overflow-x-hidden'>
     <video autoplay loop playsinline muted class="absolute inset-0 h-full w-full object-cover -z-100">
         <source src="assests/Chillhop.mp4" type="video/mp4" />
     </video>
@@ -35,22 +35,25 @@
             </div>
             <div class="inputArea" style='display:flex;'>
                 <input type="text" name='input'
-                    class='input font-[400] font-normal text-[24px] leading-[100%] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[15px] w-[614px] h-[81px]'
+                    class='input focus:outline-none font-[400] font-normal text-[24px] leading-[100%] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[15px] w-[614px] h-[81px]'
                     placeholder='Enter ToDo'>
                 <button
                     class='addBtn ml-[10px] font-[400] font-normal text-[24px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[32px] py-'
                     style='cursor:pointer;' style="font-family: 'Baloo Bhaina 2', sans-serif;">add</button>
                 <div>
                     <select name="" id="select" style="font-family: 'Baloo Bhaina 2', sans-serif;"
-                        class='ml-[46px] w-[350px] h-[81px] font-[400] font-normal text-[24px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 pl-[25px]'>
-                        <option class='all' value="all">All</option>
-                        <option class='complete' value="complete">Completetd</option>
-                        <option class='incomplete' value="incomplete">Pending</option>
+                        class='relative focus:outline-none appearance-none ml-[46px] w-[350px] h-[81px] font-[400] font-normal text-[24px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 pl-[25px]'><img
+                            src="assests/Chevron Down.png" alt="chevron" class='absolute bg-clip'>
+                        <option class='all bg-black text-white' value="all">All</option>
+                        <option class='complete bg-black text-white' value="complete">
+                            Completetd</option>
+                        <option class='incomplete bg-black text-white' value="incomplete">Pending
+                        </option>
                     </select>
                 </div>
             </div>
             <div class="list">
-                <ul class='mt-[74px] wrap-break-word h-[560px] overflow-auto'></ul>
+                <ul class='mt-[74px] wrap-break-word h-[70vh] overflow-auto'></ul>
             </div>
         </div>
     </div>
