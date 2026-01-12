@@ -46,11 +46,11 @@ const List = (text, ischecked = false) => {
 
     let listItem = `
                 <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-2 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
-                    <h2 class='h2item flex item-start justify-center mt-4'>
+                    <h2 class='h2item flex item-start justify-center mt-4 gap-3'>
                        <span class="task-text cursor-pointer text-[26px] w-[477px] break-words block">${checktext}</span>
                     </h2>
-                    <div class='flex items-center justify-center mt-[10px]'>
-                        <input type="checkbox" class='inputCheck cursor-pointer w-[18px] h-[18px]'  ${ischecked ? 'checked' : ''}>
+                    <div class='flex items-center justify-center mt-[10px] gap-2'>
+                        <input type="checkbox" class='inputCheck cursor-pointer w-[18px] h-[18px] mt-2'  ${ischecked ? 'checked' : ''}>
                         <button class="delBtn cursor-pointer">
                             <img src='assests/trash-solid-full.svg' class='w-[30px]'>
                         </button>
