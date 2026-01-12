@@ -24,6 +24,7 @@ const AddInput = () => {
         const limit = 18;
         h2Span.innerText = inputText.length > limit ? inputText.slice(0, limit) + '...' : inputText
         console.log(`I am from edit addinput`, h2Span)
+        updateBtnState(edit)
         if (delBtn) delBtn.disabled = false
         input.value = '';
         addBtn.textContent = 'Add';
@@ -46,13 +47,13 @@ const List = (text, ischecked = false) => {
     console.log(checktext)
 
     let listItem = `
-                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[24px] w-[735px] min-h-[68px] h-auto break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
+                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-4 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
                     <h2 class='h2item flex item-start justify-center mt-4'>
                        <span class="task-text cursor-pointer w-[477px] break-words block">${checktext}</span>
                     </h2>
                     <div class='flex items-center justify-center'>
-                        <input type="checkbox" class='inputCheck cursor-pointer'  ${ischecked ? 'checked' : ''}>
-                        <button class='delBtn cursor-pointer'><img src="assests/Trash.svg" alt="trash" class='w-[50px] h-[42px]'></button>
+                        <input type="checkbox" class='inputCheck cursor-pointer w-[20px] h-[20px] border-none'  ${ischecked ? 'checked' : ''}>
+                        <button class='delBtn cursor-pointer'><img src="assests/Trash.svg" alt="trash" class='w-[50px] h-[42px] text-red-600'></button>
                     </div>
                 </li>
     `
@@ -74,7 +75,7 @@ const List = (text, ischecked = false) => {
 
     if (text.length > charcterLimit) {
         let showMoreBtn = `
-            <span class='showmore text-[20px] text-white underline cursor-pointer'>Show More</span>
+            <span class='showmore text-[16px] text-white underline cursor-pointer hover:text--600'>Show More</span>
         `
         h2.insertAdjacentHTML('beforeend', showMoreBtn);
 
@@ -178,6 +179,37 @@ function checkButtonState(span, text, btnmoreless) {
         console.log(`I am the show less button`);
     }
 }
+
+// Function for checking if the user has convert a too big text in
+//  to the limit or too small text that exceeds the limit
+// for showmore btn to disappear and appear
+
+function updateBtnState(editLi) {
+    const limit = 18;
+    const span = editLi.querySelector('.task-text');
+    const h2 = editLi.querySelector('h2');
+    let showMoreBtn = editLi.querySelector('.showmore');
+
+    // the btn will go away if the text is too short
+    if (span.dataset.fulltext.length <= limit) {
+        if (showMoreBtn) showMoreBtn.remove()
+        span.innerText = span.dataset.fulltext;
+        return
+    }
+
+    // Add button if missing
+    if (!showMoreBtn) {
+        showMoreBtn = document.createElement('span');
+        showMoreBtn.className = 'showmore text-[20px] text-white underline cursor-pointer';
+        showMoreBtn.textContent = 'Show More';
+        h2.appendChild(showMoreBtn);
+
+        showMoreBtn.addEventListener('click', () => {
+            checkButtonState(span, span.dataset.fulltext, showMoreBtn);
+        })
+    }
+}
+
 
 
 // Handle Event Listeners
