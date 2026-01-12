@@ -39,21 +39,21 @@ const AddInput = () => {
 }
 
 const List = (text, ischecked = false) => {
-
-    if (typeof text !== 'string' || text.trim() === '') return;
     // Creating li
     const charcterLimit = 18;
     const checktext = text.length > charcterLimit ? text.slice(0, charcterLimit) + '...' : text;
     console.log(checktext)
 
     let listItem = `
-                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-4 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
+                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-2 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
                     <h2 class='h2item flex item-start justify-center mt-4'>
-                       <span class="task-text cursor-pointer w-[477px] break-words block">${checktext}</span>
+                       <span class="task-text cursor-pointer text-[26px] w-[477px] break-words block">${checktext}</span>
                     </h2>
-                    <div class='flex items-center justify-center'>
-                        <input type="checkbox" class='inputCheck cursor-pointer w-[20px] h-[20px] border-none'  ${ischecked ? 'checked' : ''}>
-                        <button class='delBtn cursor-pointer'><img src="assests/Trash.svg" alt="trash" class='w-[50px] h-[42px] text-red-600'></button>
+                    <div class='flex items-center justify-center mt-[10px]'>
+                        <input type="checkbox" class='inputCheck cursor-pointer w-[18px] h-[18px]'  ${ischecked ? 'checked' : ''}>
+                        <button class="delBtn cursor-pointer">
+                            <img src='assests/trash-solid-full.svg' class='w-[30px]'>
+                        </button>
                     </div>
                 </li>
     `
@@ -70,12 +70,16 @@ const List = (text, ischecked = false) => {
     span.dataset.fulltext = text
     // This is for when page reload the line through will still remian
     if (ischecked) {
-        span.style.textDecoration = 'line-through';
+        if (span) {
+            span.classList.add('strike')
+        } else {
+            span.classList.remove('strike')
+        }
     }
 
     if (text.length > charcterLimit) {
         let showMoreBtn = `
-            <span class='showmore text-[16px] text-white underline cursor-pointer hover:text--600'>Show More</span>
+            <span class='showmore text-[14px] text-white underline cursor-pointer hover:text-gray-300'>Show More</span>
         `
         h2.insertAdjacentHTML('beforeend', showMoreBtn);
 
@@ -112,8 +116,11 @@ const List = (text, ischecked = false) => {
     checkBox.addEventListener('change', (e) => {
         console.log(e.target)
         const checkh2 = e.target.closest('.item').querySelector('span')
-        checkh2.style.textDecoration = e.target.checked ? 'line-through' : 'none'
-        setLocalList()
+        if (e.target.checked) {
+            checkh2.classList.add('strike');
+        } else {
+            checkh2.classList.remove('strike');
+        } setLocalList()
     })
 }
 
@@ -167,16 +174,25 @@ function filterItems(type) {
 // Check if the item has more than 25 character show (show more / less)
 function checkButtonState(span, text, btnmoreless) {
     const limit = 18;
-    let currentText = span.innerText;
+    const li = span.closest('.item');
+    const checkbox = li.querySelector('.inputCheck');
 
-    if (currentText === text) {
+    const currentText = span.innerText === text;
+
+    if (currentText) {
         span.innerText = text.slice(0, limit) + '...';
         btnmoreless.textContent = 'Show More';
-        console.log(`I am the show More button`);
+        span.style.textDecoration = '';
+        if (checkbox.checked) {
+            span.classList.add('strike');
+        }
     } else {
         span.innerText = text;
         btnmoreless.textContent = 'Show Less';
-        console.log(`I am the show less button`);
+        span.classList.remove('strike');
+        if (checkbox.checked) {
+            span.style.textDecoration = 'line-through';
+        }
     }
 }
 
@@ -200,7 +216,7 @@ function updateBtnState(editLi) {
     // Add button if missing
     if (!showMoreBtn) {
         showMoreBtn = document.createElement('span');
-        showMoreBtn.className = 'showmore text-[20px] text-white underline cursor-pointer';
+        showMoreBtn.className = 'showmore text-[14px] text-white underline cursor-pointer';
         showMoreBtn.textContent = 'Show More';
         h2.appendChild(showMoreBtn);
 
@@ -223,3 +239,7 @@ const filterSelect = document.querySelector('#select');
 filterSelect.addEventListener('change', (e) => {
     filterItems(e.target.value);
 })
+
+
+
+

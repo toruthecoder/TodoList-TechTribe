@@ -20,7 +20,31 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Baloo+Bhaina+2:wght@400..800&family=Baloo+Tammudu+2:wght@400..800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .btn-red:hover {
+            color: red;
+        }
+
+        .strike {
+            position: relative;
+            display: inline-block;
+        }
+
+        .strike::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 35%;
+            width: 58%;
+            height: 2px;
+            background: black;
+            transform: translateY(-50%);
+        }
+    </style>
 </head>
 
 <body class='w-screen flex items-center justify-center h-full overflow-x-hidden'>
@@ -30,20 +54,19 @@
     <div class="container text-white w-full">
         <div class='wrapper relative z-10 flex flex-col items-center'>
             <div class="head">
-                <h1 class='mt-[58px] mb-[44px] font-[400] text-[46px] leading-[100%] tracking-[0] font-normal bg-[linear-gradient(20deg,_rgba(196, 86, 77, 1)_0%,_rgba(134, 75, 73, 1)_100%)] bg-clip-text  bg-white/30 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-12 py-[6px] max-w-sm'
+                <h1 class='mt-[58px] mb-[44px] font-[400] text-[36px] leading-[100%] tracking-[0] font-normal bg-[linear-gradient(20deg,_rgba(196, 86, 77, 1)_0%,_rgba(134, 75, 73, 1)_100%)] bg-clip-text  bg-white/30 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-12 py-[6px] max-w-sm'
                     style="font-family: 'Baloo 2', sans-serif;">TODO-List</h1>
             </div>
             <div class="inputArea" style='display:flex;'>
                 <input type="text" name='input'
-                    class='input focus:outline-none font-[400] font-normal text-[24px] leading-[100%] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[15px] w-[614px] h-[70px]'
+                    class='input focus:outline-none font-[400] font-normal text-[20px] leading-[100%] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[15px] w-[614px] h-[60px]'
                     placeholder='Enter ToDo'>
                 <button
-                    class='addBtn ml-[10px] font-[400] font-normal text-[24px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[32px]'
+                    class='addBtn ml-[10px] font-[400] font-normal text-[18px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[20px]'
                     style='cursor:pointer;' style="font-family: 'Baloo Bhaina 2', sans-serif;">add</button>
                 <div>
                     <select name="" id="select" style="font-family: 'Baloo Bhaina 2', sans-serif;"
-                        class='relative focus:outline-none appearance-none ml-[46px] w-[350px] h-[70px] font-[400] font-normal text-[24px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 pl-[25px]'><img
-                            src="assests/Chevron Down.png" alt="chevron" class='absolute bg-clip'>
+                        class='relative focus:outline-none appearance-none ml-[46px] w-[350px] h-[60px] font-[400] font-normal text-[20px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 pl-[25px]'>
                         <option class='all bg-black text-white' value="all">All</option>
                         <option class='complete bg-black text-white' value="complete">
                             Completetd</option>
