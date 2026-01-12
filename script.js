@@ -20,10 +20,11 @@ const AddInput = () => {
         const h2Span = edit.querySelector('.task-text');
         console.log(h2Span)
         const delBtn = edit.querySelector('.delBtn')
-        if (delBtn) {
-            delBtn.disabled = false
-        }
-        h2Span.innerText = inputText
+        h2Span.dataset.fulltext = inputText
+        const limit = 18;
+        h2Span.innerText = inputText.length > limit ? inputText.slice(0, limit) + '...' : inputText
+        console.log(`I am from edit addinput`, h2Span)
+        if (delBtn) delBtn.disabled = false
         input.value = '';
         addBtn.textContent = 'Add';
         edit = null;
@@ -37,19 +38,21 @@ const AddInput = () => {
 }
 
 const List = (text, ischecked = false) => {
+
+    if (typeof text !== 'string' || text.trim() === '') return;
     // Creating li
     const charcterLimit = 18;
     const checktext = text.length > charcterLimit ? text.slice(0, charcterLimit) + '...' : text;
-
+    console.log(checktext)
 
     let listItem = `
-                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[24px] w-[735px] min-h-[78px] wrap-break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
+                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[24px] w-[735px] min-h-[68px] h-auto break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
                     <h2 class='h2item flex item-start justify-center mt-4'>
-                       <span class="task-text cursor-pointer w-[477px] break-words block data-fulltext="${text}">${checktext}</span>
+                       <span class="task-text cursor-pointer w-[477px] break-words block">${checktext}</span>
                     </h2>
                     <div class='flex items-center justify-center'>
                         <input type="checkbox" class='inputCheck cursor-pointer'  ${ischecked ? 'checked' : ''}>
-                        <button class='delBtn cursor-pointer'><img src="assests/Trash.svg" alt="trash" class='w-[60px] h-[42px]'></button>
+                        <button class='delBtn cursor-pointer'><img src="assests/Trash.svg" alt="trash" class='w-[50px] h-[42px]'></button>
                     </div>
                 </li>
     `
@@ -63,21 +66,21 @@ const List = (text, ischecked = false) => {
     const deleteBtn = newLi.querySelector('.delBtn');
     const checkBox = newLi.querySelector('.inputCheck');
     const span = newLi.querySelector('.task-text')
-
+    span.dataset.fulltext = text
     // This is for when page reload the line through will still remian
     if (ischecked) {
-        h2.style.textDecoration = 'line-through';
+        span.style.textDecoration = 'line-through';
     }
 
     if (text.length > charcterLimit) {
         let showMoreBtn = `
-            <span class='showmore text-[20px] py-[10px] text-white underline cursor-pointer'>Show More</span>
+            <span class='showmore text-[20px] text-white underline cursor-pointer'>Show More</span>
         `
         h2.insertAdjacentHTML('beforeend', showMoreBtn);
 
         const showmoreBtn = newLi.querySelector('.showmore');
         showmoreBtn.addEventListener('click', () => {
-            checkButtonState(span, text, showmoreBtn);
+            checkButtonState(span, span.dataset.fulltext, showmoreBtn);
         })
     }
 
@@ -92,8 +95,9 @@ const List = (text, ischecked = false) => {
         console.log('clicked i am h2');
         const span = e.target.closest('.task-text')
         if (!span) return;
-        console.log(`bla bla`);
-        input.value = span.innerText;
+        console.log(`bla bla`, span);
+        input.value = span.dataset.fulltext;
+        console.log(`From h2 event listener `, input.value)
         // Now when the user edit the text and enter the text goes back to the edited li
         edit = newLi
         deleteBtn.disabled = true
@@ -101,13 +105,12 @@ const List = (text, ischecked = false) => {
         input.focus();
         setLocalList()
         if (edit === null) deleteBtn.disabled = false
-    }
-    )
+    })
 
     // Check if the user has checked the checkbox or not
     checkBox.addEventListener('change', (e) => {
         console.log(e.target)
-        const checkh2 = e.target.closest('.item').querySelector('h2')
+        const checkh2 = e.target.closest('.item').querySelector('span')
         checkh2.style.textDecoration = e.target.checked ? 'line-through' : 'none'
         setLocalList()
     })
@@ -122,21 +125,25 @@ function setLocalList() {
         localStorage.removeItem('List')
         return
     }
+
     liList.forEach((item) => {
         data.push({
-            text: item.querySelector('.task-text').innerText,
+            text: item.querySelector('.task-text').dataset.fulltext,
             checked: item.querySelector('input.inputCheck').checked,
         })
-        localStorage.setItem('List', JSON.stringify(data));
     })
+    localStorage.setItem('List', JSON.stringify(data));
+    console.log(`data from setLocal`, data)
 }
 
 // this is a function for getting the data on page load
 function getLocalList() {
     const data = JSON.parse(localStorage.getItem('List'));
+    console.log(`This is data from getLocal`, data)
     if (data) {
         data.forEach((item) => { List(item.text, item.checked) })
     }
+
 }
 
 // Function for filtering list
@@ -158,7 +165,7 @@ function filterItems(type) {
 
 // Check if the item has more than 25 character show (show more / less)
 function checkButtonState(span, text, btnmoreless) {
-    const limit = 25;
+    const limit = 18;
     let currentText = span.innerText;
 
     if (currentText === text) {
