@@ -195,6 +195,7 @@ function checkButtonState(span, text, btnmoreless) {
         }
     }
 }
+//push
 
 // Function for checking if the user has convert a too big text in
 //  to the limit or too small text that exceeds the limit
