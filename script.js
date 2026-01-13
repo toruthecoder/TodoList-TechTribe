@@ -45,7 +45,7 @@ const List = (text, ischecked = false) => {
     console.log(checktext)
 
     let listItem = `
-                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-white border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-2 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
+                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-white border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-2 px-10' style="font-family: 'Baloo Tammudu 2', sans-serif;">
                     <h2 class='h2item flex item-start justify-center mt-4 gap-3'>
                        <span class="task-text cursor-pointer text-[26px] max-w-[477px] w-full break-words block">${checktext}</span>
                     </h2>
@@ -90,9 +90,11 @@ const List = (text, ischecked = false) => {
     }
 
     // Remove the list when click on delete button
-    deleteBtn.addEventListener('click', () => {
-        newLi.remove();
-        setLocalList();
+    deleteBtn.addEventListener('click', (e) => {
+        if (deleteBtn) {
+            e.stopPropagation()
+            confirmation(newLi)
+        }
     })
 
     // If click on text or li the text will go into the textfield
@@ -192,7 +194,6 @@ function checkButtonState(span, text, btnmoreless) {
         span.classList.remove('strike');
         if (checkbox.checked) {
             span.style.textDecoration = 'line-through';
-            span.style.textDecorationColor = 'black';
         }
     }
 }
@@ -218,7 +219,7 @@ function updateBtnState(editLi) {
     // Add button if missing
     if (!showMoreBtn) {
         showMoreBtn = document.createElement('span');
-        showMoreBtn.className = 'showmore text-[14px] text-white underline cursor-pointer';
+        showMoreBtn.className = 'showmore text-[14px] text-white underline cursor-pointer w-[90px]';
         showMoreBtn.textContent = 'Show More';
         h2.appendChild(showMoreBtn);
 
@@ -248,6 +249,27 @@ function loader() {
     }
 }
 
+function confirmation(newLi) {
+    let noti = document.querySelector('.noti')
+    let notifica = document.querySelector('.get');
+
+    noti.style.display = 'block'
+    notifica.style.display = 'block'
+
+    let yesBtn = document.querySelector('.yesBtn');
+    yesBtn.addEventListener('click', () => {
+        newLi.remove()
+        setLocalList()
+        noti.style.display = 'none'
+        notifica.style.display = 'none'
+    })
+
+    let noBtn = document.querySelector('.noBtn');
+    noBtn.addEventListener('click', () => {
+        noti.style.display = 'none'
+        notifica.style.display = 'none'
+    })
+}
 
 
 // Handle Event Listeners

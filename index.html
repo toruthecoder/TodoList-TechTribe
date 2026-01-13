@@ -41,7 +41,7 @@
             top: 35%;
             width: 93%;
             height: 2px;
-            background: black;
+            background: white;
             transform: translateY(-50%);
         }
 
@@ -115,6 +115,17 @@
 </head>
 
 <body class='w-screen flex items-center justify-center h-full overflow-x-hidden'>
+    <div class='noti absolute  w-full h-full z-100 hidden'>
+        <div
+            class='get hidden relative w-[300px] top-[50%] left-[40%] bg-[white] px-10 py-10 z-100 text-center flex flex-col rounded-[10px]'>
+            <p>Are You Sure?</p>
+            <div class='flex gap-2 mt-4 justify-center'>
+                <button class='yesBtn bg-red-400 rounded-[5px] cursor-pointer px-5 text-white py-1'>Delete</button>
+                <button class='noBtn bg-green-400 rounded-[5px] cursor-pointer px-5 text-white py-1'>Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <div class='goo'>
         <div class="loader"></div>
     </div>
@@ -133,13 +144,13 @@
                     placeholder='Enter ToDo'>
                 <button
                     class='addBtn ml-[10px] font-[400] font-normal text-[18px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 px-[20px]'
-                    style='cursor:pointer;' style="font-family: 'Baloo Bhaina 2', sans-serif;">add</button>
+                    style='cursor:pointer;' style="font-family: 'Baloo Bhaina 2', sans-serif;">Add</button>
                 <div>
                     <select name="" id="select" style="font-family: 'Baloo Bhaina 2', sans-serif;"
                         class='relative focus:outline-none appearance-none ml-[46px] w-[350px] h-[60px] font-[400] font-normal text-[20px] leading-[100$] tracking-0 bg-white/10 backdrop-blur-lg rounded-xl shadow-xl border border-white/20 pl-[25px]'>
                         <option class='all bg-black text-white' value="all">All</option>
                         <option class='complete bg-black text-white' value="complete">
-                            Completetd</option>
+                            Completed</option>
                         <option class='incomplete bg-black text-white' value="incomplete">Pending
                         </option>
                     </select>
