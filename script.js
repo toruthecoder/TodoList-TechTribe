@@ -242,7 +242,7 @@ function loader() {
         setTimeout(() => {
             goo.style.display = 'none';
             loader.style.display = 'none';
-        }, 50)
+        }, 5000)
     } else {
         console.log(`loader error`)
     }
