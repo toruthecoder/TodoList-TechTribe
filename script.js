@@ -45,12 +45,12 @@ const List = (text, ischecked = false) => {
     console.log(checktext)
 
     let listItem = `
-                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-black border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-2 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
+                <li class='item font-[400] font-normal text-[40px] leading-[100%] tracking-0 flex flex-row items-start justify-between mt-[20px] w-[735px]  wrap-break-word text-white border bg-white/10 backdrop-blur-[32px] rounded-[85px] shadow-xl border border-white/20 p-2 px-8' style="font-family: 'Baloo Tammudu 2', sans-serif;">
                     <h2 class='h2item flex item-start justify-center mt-4 gap-3'>
-                       <span class="task-text cursor-pointer text-[26px] w-[477px] break-words block">${checktext}</span>
+                       <span class="task-text cursor-pointer text-[26px] max-w-[477px] w-full break-words block">${checktext}</span>
                     </h2>
                     <div class='flex items-center justify-center mt-[10px] gap-2'>
-                        <input type="checkbox" class='inputCheck cursor-pointer w-[18px] h-[18px] mt-2'  ${ischecked ? 'checked' : ''}>
+                        <input type="checkbox" class='inputCheck cursor-pointer w-[18px] h-[18px] mt-2 appearance-none rounded-lg bg-white'  ${ischecked ? 'checked' : ''}>
                         <button class="delBtn cursor-pointer">
                             <img src='assests/trash-solid-full.svg' class='w-[30px]'>
                         </button>
@@ -79,7 +79,7 @@ const List = (text, ischecked = false) => {
 
     if (text.length > charcterLimit) {
         let showMoreBtn = `
-            <span class='showmore text-[14px] text-white underline cursor-pointer hover:text-gray-300'>Show More</span>
+            <span class='showmore text-[14px] text-white underline cursor-pointer hover:text-gray-300 w-[90px]'>Show More</span>
         `
         h2.insertAdjacentHTML('beforeend', showMoreBtn);
 
@@ -192,6 +192,7 @@ function checkButtonState(span, text, btnmoreless) {
         span.classList.remove('strike');
         if (checkbox.checked) {
             span.style.textDecoration = 'line-through';
+            span.style.textDecorationColor = 'black';
         }
     }
 }
@@ -227,12 +228,36 @@ function updateBtnState(editLi) {
     }
 }
 
+// function for loader on load
+
+function loader() {
+    const loader = document.querySelector('.loader')
+    const goo = document.querySelector('.goo')
+
+    if (loader && goo) {
+
+        goo.style.display = 'block';
+        loader.style.display = 'block';
+
+        setTimeout(() => {
+            goo.style.display = 'none';
+            loader.style.display = 'none';
+        }, 50)
+    } else {
+        console.log(`loader error`)
+    }
+}
+
 
 
 // Handle Event Listeners
 addBtn.addEventListener('click', AddInput);
 // Function for updating local storage
 window.addEventListener('load', getLocalList);
+
+
+// Timeout function 
+window.addEventListener('load', loader)
 
 // Calling the select component from html
 const filterSelect = document.querySelector('#select');
